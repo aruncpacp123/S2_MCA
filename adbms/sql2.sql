@@ -1,0 +1,16 @@
+select * from countries;
+select email,phone_number from employees;
+select * from employees where last_name="Fay";
+select employee_id,last_name,hire_date from employees where last_name="Grant" or last_name="Whalen";
+select first_name from employees where job_id in (select job_id from jobs where job_title="Shipping Clerk");
+select * from employees,dept where employees.department_id=dept.department_id and dept.department_id=8;
+select * from dept order by department_id desc;
+select * from employees where last_name like 'K%';
+select first_name,hire_date from employees where hire_date between '1995-01-01' and '1997-01-01';
+select * from jobs where max_salary<5000;
+select LOWER(email) from employees;
+select first_name,hire_date from employees where hire_date between '1995-01-01' and '1995-12-31';
+insert into employees(employee_id,first_name,last_name)values(207,'Paul','Newton');
+set sql_safe_updates=0;
+delete from dept where department_name="Shipping";
+select * from employees where dayname(hire_date)="tuesday";
