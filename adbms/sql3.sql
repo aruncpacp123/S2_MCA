@@ -8,11 +8,15 @@ create table prerequisite(Course_number varchar(25) ,Prerequisite_number varchar
 
 insert into student values('Smith',17,1,'CS');
 insert into student values('Brown',8,2,'CS');
+insert into student values('John',10,4,'MATH');
+insert into student values('Ram',15,4,'CS');
+
 
 insert into course values('Intro to Computer Science','CS1310',4,'CS');
 insert into course values('Data Structures','CS3320',4,'CS');
 insert into course values('Discrete Mathematics','MATH2410',3,'MATH');
 insert into course values('Database','CS3380',3,'CS');
+insert into course values('Computer Networks','CS3340',3,'CS');
 
 insert into section values(85,'MATH2410','Fall',07,'King');
 insert into section values(92,'CS1310','Fall',07,'Anderson');
@@ -20,6 +24,7 @@ insert into section values(102,'CS3320','Spring',08,'Knuth');
 insert into section values(112,'MATH2410','Fall',08,'Chang');
 insert into section values(119,'CS1310','Fall',08,'Anderson');
 insert into section values(135,'CS3380','Fall',08,'Stone');
+insert into section values(144,'CS3340','Fall',07,'King');
 
 insert into grade_report values(17,112,'B');
 insert into grade_report values(17,119,'C');
@@ -27,10 +32,13 @@ insert into grade_report values(8,85,'A');
 insert into grade_report values(8,92,'A');
 insert into grade_report values(8,102,'B');
 insert into grade_report values(8,135,'A');
+insert into grade_report values(8,135,'A');
+insert into grade_report values(15,144,'A');
 
 insert into prerequisite values('CS3380','CS3320');
 insert into prerequisite values('CS3380','MATH2410');
 insert into prerequisite values('CS3320','CS1310');
+insert into prerequisite values('CS3340','CS1310');
 
 -- question3
 select Name,Course_name,Grade from grade_report g inner join student on student.Student_number=g.Student_number inner join section on g.Section_identifier=section.section_identifier inner join course on course.Course_number=section.Course_number where Name="Smith";
@@ -56,4 +64,15 @@ select name from student where major="CS" and class=4;
 select Course_name,Year from section inner join course on course.Course_number=section.Course_number where Instructor="King" and Year between 07 and 08;
 
 -- question8
-select Student_number,Course_number,Year,Semester,count(*) from section inner join grade_report on grade_report.Section_identifier=section.Section_identifier where Instructor="King" group by Student_number;
+select Instructor,Course_number,Year,Semester,count(Student_number) from section inner join grade_report on grade_report.Section_identifier=section.Section_identifier group by grade_report.Section_identifier	having Instructor="King";
+
+-- question9
+select name,course.Course_number,Course_name,Credit_hours,Semester,Year,Grade from section inner join grade_report g on g.Section_identifier=section.Section_identifier inner join course on course.Course_number=section.Course_number inner join student on student.Student_number= g.Student_number where Class=4 and Major="CS";
+
+-- question10
+insert into student values('Johnson',25,1,'MATH');
+update student set Class=2 where Name="Smith";
+-- SET SQL_SAFE_UPDATES = 0;
+insert into course values('Knowledge Engineering','CS4390',3,'CS');
+delete from student where name="Smith" and Student_number=17;
+select * from student;
