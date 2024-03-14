@@ -32,4 +32,28 @@ insert into prerequisite values('CS3380','CS3320');
 insert into prerequisite values('CS3380','MATH2410');
 insert into prerequisite values('CS3320','CS1310');
 
+-- question3
+select Name,Course_name,Grade from grade_report g inner join student on student.Student_number=g.Student_number inner join section on g.Section_identifier=section.section_identifier inner join course on course.Course_number=section.Course_number where Name="Smith";
 
+-- question4  
+select name,Course_name,Semester,Grade from section inner join grade_report g on g.Section_identifier= section.Section_identifier inner join course on course.Course_number=section.Course_number inner join student on student.Student_number=g.Student_number where Semester="Fall" and Year=08 and Course_name="Database";
+
+-- question5
+select Course_name as prerequiste_name from course where Course_number IN (
+select Prerequisite_number from prerequisite p inner join course on course.Course_number=p.Course_number where Course_name="Database");
+
+-- question6(my)
+select distinct name from course inner join section on course.Course_number=section.Course_number inner join grade_report on section.Section_identifier=grade_report.Section_identifier inner join student on student.Student_number=grade_report.Student_number where year = (select distinct min(year) from section);
+
+-- select name from student where Major in (
+-- select Department from course where Department="CS" and Course_number in (
+-- select Course_number from section where Year = (select distinct min(year) from section)));
+
+-- question6
+select name from student where major="CS" and class=4;
+
+-- question7
+select Course_name,Year from section inner join course on course.Course_number=section.Course_number where Instructor="King" and Year between 07 and 08;
+
+-- question8
+select Student_number,Course_number,Year,Semester,count(*) from section inner join grade_report on grade_report.Section_identifier=section.Section_identifier where Instructor="King" group by Student_number;
