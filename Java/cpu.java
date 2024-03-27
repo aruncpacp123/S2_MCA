@@ -3,6 +3,13 @@ public class cpu {
     class Processor
     {
         int cores;
+        String manufacturer;
+        static class RAM
+        {
+            int memory;
+            String manufacturer;
+            
+        }
         
     }
 }
